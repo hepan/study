@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+    <script>
+
+        const userId = 'mits3333333333333';
+        var sendMessage = null;
+        var disConnect = null;
+
+
+
+        function connect() {
+            var client = Stomp.client('ws://127.0.0.1:18080/ws/websocket');
+            client.heartbeat.outgoing = 5000;
+            client.heartbeat.incoming = 0;
+
+            client.connect({
+                userId: userId
+            }, function (succ) {
+                console.log('client connect success:', succ);
+                updateState('连接成功');
+
+
+                // // 订阅消息
+
+                client.subscribe("/topic/bind/123456",onMessage);
+            }, function (error) {
+                console.log('client connect error:', error);
+                updateState('连接失败');
+            });
+            sendMessage = function (destination, headers, body) {
+                client.send(destination, headers, body)
+            };
+            disConnect = function () {
+                client.disconnect();
+                console.log('client connect break')
+            };
+
+            sendMessage = function (destination, headers, body) {
+                client.send(destination, headers, body)
+            };
+        }
+
+        function onMessage(message) {
+            console.log("receive message ["+message.body+"]");
+            //insertChat(false, message.headers.destination, message.body)
+        }
+
+        function updateState(state) {
+            console.log('[connected] state is -->'+state)
+        }
+
+
+        function send(destination,message) {
+            // var destination=document.getElementById("destination").value;
+            // var message=document.getElementById("message").value;
+            // var destination='/topic/bind/123456';
+            if(sendMessage==null){
+                console.error("ws connect break!!!");
+                return ;
+            }
+            sendMessage(destination,{},message);
+            console.log("send message ---->" +destination +"*****"+ message)
+
+        }
+    </script>
+    <title>stomp-test</title>
+</head>
+<body>
+<h1>stomp-test</h1>
+
+<button type="button" id="connect" onclick="connect()"> connect </button>
+<br>
+
+<button type="button" id="send topic message" onclick="send('/topic/bind/123456','this is topic message')">sendTopic()</button>
+<button type="button" id="send app message" onclick="send('/app/test/user123','this is app message')">sendApp()</button>
+
+</body>
+
+
+</html>
