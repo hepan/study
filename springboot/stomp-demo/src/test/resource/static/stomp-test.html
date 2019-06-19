@@ -12,7 +12,7 @@
 
 
         function connect() {
-            var client = Stomp.client('ws://127.0.0.1:18080/ws/websocket');
+            var client = Stomp.client('ws://192.168.1.49:18080/ws/websocket');
             client.heartbeat.outgoing = 5000;
             client.heartbeat.incoming = 0;
 
