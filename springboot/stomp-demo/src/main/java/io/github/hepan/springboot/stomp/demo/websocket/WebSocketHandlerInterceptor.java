@@ -22,13 +22,13 @@ public class WebSocketHandlerInterceptor implements ChannelInterceptor {
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
-        if(StompCommand.CONNECT.equals(accessor.getCommand())){
-            String userId=accessor.getFirstNativeHeader("userId");
-            if(StringUtils.isEmpty(userId)){
+        if (StompCommand.CONNECT.equals(accessor.getCommand())) {
+            String userId = accessor.getFirstNativeHeader("userId");
+            if (StringUtils.isEmpty(userId)) {
                 return null;
             }
 
-            Principal principal=new UserPrincipal(userId);
+            Principal principal = new UserPrincipal(userId);
             accessor.setUser(principal);
 
         }

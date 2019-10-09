@@ -33,7 +33,7 @@ public class SwaggerConfig {
                 .apiInfo(groupApiInfo());
     }
 
-    private ApiInfo groupApiInfo(){
+    private ApiInfo groupApiInfo() {
         return new ApiInfoBuilder()
                 .title("zuul api collection")
                 .description("这是个描述，api越看越happy！！！ 看这里，看这里，看这里，看这里。。。")

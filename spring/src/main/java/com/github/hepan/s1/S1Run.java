@@ -6,17 +6,16 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class S1Run {
     public static void main(String[] args) {
-        ApplicationContext ac=new AnnotationConfigApplicationContext(MainConfig.class);
-        Person p=  ac.getBean(Person.class);
+        ApplicationContext ac = new AnnotationConfigApplicationContext(MainConfig.class);
+        Person p = ac.getBean(Person.class);
         System.out.println(p);
 
-        String[] name=ac.getBeanNamesForType(Person.class);
+        String[] name = ac.getBeanNamesForType(Person.class);
         for (String s : name) {
             System.out.println(s);
         }
 
     }
-
 
 
 }

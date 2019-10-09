@@ -44,18 +44,18 @@ public class MessageController {
         log.info("[test] DestinationVariable: {}", id);
         log.info("[test] Payload: {}", body);
 
-        System.out.println(id+"----------");
+        System.out.println(id + "----------");
     }
 
 
     @MessageMapping("/bind/{resource}")
     public boolean bindResource(Message message,
-                             @DestinationVariable String resource){
-        return stompUserRepository.addRepo(StompHeaderAccessor.wrap(message).getUser(),resource);
+                                @DestinationVariable String resource) {
+        return stompUserRepository.addRepo(StompHeaderAccessor.wrap(message).getUser(), resource);
     }
 
     @MessageMapping("/release/{resource}")
-    public void releaseResource(Message message,@DestinationVariable String resource){
-        stompUserRepository.releaseResource(StompHeaderAccessor.wrap(message).getUser(),resource);
+    public void releaseResource(Message message, @DestinationVariable String resource) {
+        stompUserRepository.releaseResource(StompHeaderAccessor.wrap(message).getUser(), resource);
     }
 }

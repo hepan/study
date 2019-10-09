@@ -7,11 +7,11 @@ package io.github.hepan.jvm;
  */
 public class RuntiomConstantPoolOOM {
     public static void main(String[] args) {
-        String s=new String("1");
+        String s = new String("1");
 
-        String s1="1";
+        String s1 = "1";
 //        s.intern();
-        System.out.println( s==s1);
+        System.out.println(s == s1);
 
         String s3 = new StringBuilder("1").append("1").toString();
 

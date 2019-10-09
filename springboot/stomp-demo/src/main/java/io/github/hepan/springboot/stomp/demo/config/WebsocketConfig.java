@@ -18,7 +18,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @EnableWebSocketMessageBroker
 public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
 
-    private final static long HEART_BEAT=5000;
+    private final static long HEART_BEAT = 5000;
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
@@ -36,12 +36,9 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
         te.initialize();
 
 
-
         // 设置接收客户端订阅 的 路径前缀（必须不设置，可以为空串）
-        registry.enableSimpleBroker("/topic").setHeartbeatValue(new long[]{HEART_BEAT,HEART_BEAT}).setTaskScheduler(te);
+        registry.enableSimpleBroker("/topic").setHeartbeatValue(new long[]{HEART_BEAT, HEART_BEAT}).setTaskScheduler(te);
     }
-
-
 
 
     @Override

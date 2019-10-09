@@ -30,7 +30,7 @@ import java.util.List;
 @Primary
 public class SwaggerResourceConfig implements SwaggerResourcesProvider {
 
-    Logger logger= LoggerFactory.getLogger(SwaggerResourceConfig.class);
+    Logger logger = LoggerFactory.getLogger(SwaggerResourceConfig.class);
 
 
     @Autowired
@@ -41,14 +41,15 @@ public class SwaggerResourceConfig implements SwaggerResourcesProvider {
         //获取所有router
         List<SwaggerResource> resources = new ArrayList<>();
         List<Route> routes = routeLocator.getRoutes();
-        logger.info("Route Size:{}",routes.size());
-        for (Route route:routes) {
+        logger.info("Route Size:{}", routes.size());
+        for (Route route : routes) {
             resources.add(swaggerResource(route.getId(), route.getFullPath().replace("**", "v2/api-docs")));
         }
         return resources;
     }
+
     private SwaggerResource swaggerResource(String name, String location) {
-        logger.info("name:{},location:{}",name,location);
+        logger.info("name:{},location:{}", name, location);
         SwaggerResource swaggerResource = new SwaggerResource();
         swaggerResource.setName(name);
         swaggerResource.setLocation(location);

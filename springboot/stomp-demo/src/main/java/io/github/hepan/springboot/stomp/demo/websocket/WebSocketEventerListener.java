@@ -21,15 +21,15 @@ public class WebSocketEventerListener {
     private StompUserRepository userRepository;
 
     @EventListener
-    public void handleConnectListener(SessionConnectedEvent event){
-        log.info("[ws-连接]  {}",event.getMessage());
+    public void handleConnectListener(SessionConnectedEvent event) {
+        log.info("[ws-连接]  {}", event.getMessage());
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         userRepository.addUser(accessor.getUser());
     }
 
     @EventListener
     public void handleDisconnectListener(SessionDisconnectEvent event) {
-        log.info("[ws-断开]  {}",event.getMessage());
+        log.info("[ws-断开]  {}", event.getMessage());
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(event.getMessage());
         userRepository.releaseUser(accessor.getUser());
 

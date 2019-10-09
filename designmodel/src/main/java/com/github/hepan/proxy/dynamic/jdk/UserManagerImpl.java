@@ -8,6 +8,6 @@ public class UserManagerImpl implements UserManagerInterface {
 
     @Override
     public void delete(String id) {
-        System.out.println("调用 delete 方法 入参 id-> "+id);
+        System.out.println("调用 delete 方法 入参 id-> " + id);
     }
 }

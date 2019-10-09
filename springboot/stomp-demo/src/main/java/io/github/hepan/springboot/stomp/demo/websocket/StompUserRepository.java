@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import javax.validation.constraints.Null;
 import java.security.Principal;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,11 +19,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class StompUserRepository {
     private static final Logger log = LoggerFactory.getLogger(StompUserRepository.class);
 
-    private static final Map<String , String> userRepo=new ConcurrentHashMap<>();
-    private static final Map<String ,String>  resourceRepo=new ConcurrentHashMap<>();
+    private static final Map<String, String> userRepo = new ConcurrentHashMap<>();
+    private static final Map<String, String> resourceRepo = new ConcurrentHashMap<>();
 
-    public boolean addUser(Principal principal){
-        if(ObjectUtils.isEmpty(principal)){
+    public boolean addUser(Principal principal) {
+        if (ObjectUtils.isEmpty(principal)) {
             return false;
         }
         userRepo.put(principal.getName(), "");
@@ -33,28 +32,29 @@ public class StompUserRepository {
 
     /**
      * 为user添加resource，
+     *
      * @param principal
      * @param resource
      * @return true：添加成功
-     *         false：1->resource已被占有。2->入参为null或""。
+     * false：1->resource已被占有。2->入参为null或""。
      */
-    public boolean addRepo(Principal principal,String resource){
-        if(ObjectUtils.isEmpty(principal)||StringUtils.isEmpty(resource)){
+    public boolean addRepo(Principal principal, String resource) {
+        if (ObjectUtils.isEmpty(principal) || StringUtils.isEmpty(resource)) {
             return false;
         }
         //已经被占有的资源返回错误
-        String name=resourceRepo.get(resource);
-        if(!StringUtils.isEmpty(name)){
+        String name = resourceRepo.get(resource);
+        if (!StringUtils.isEmpty(name)) {
             return false;
         }
 
 
-        String resInRepo=userRepo.get(principal.getName());
-        if(!StringUtils.isEmpty(resInRepo)){
-            log.info("[SUR] name->[{}] resource from[{}] to[{}]",name,resInRepo,resource);
+        String resInRepo = userRepo.get(principal.getName());
+        if (!StringUtils.isEmpty(resInRepo)) {
+            log.info("[SUR] name->[{}] resource from[{}] to[{}]", name, resInRepo, resource);
         }
-        userRepo.put(principal.getName(),resource);
-        resourceRepo.put(resource,principal.getName());
+        userRepo.put(principal.getName(), resource);
+        resourceRepo.put(resource, principal.getName());
 
         return true;
     }
@@ -62,14 +62,15 @@ public class StompUserRepository {
 
     /**
      * 释放user与user所占有resource
+     *
      * @param principal
      * @return
      */
-    public boolean releaseUser(Principal principal){
-        if(ObjectUtils.isEmpty(principal)){
+    public boolean releaseUser(Principal principal) {
+        if (ObjectUtils.isEmpty(principal)) {
             return false;
         }
-        String resource=userRepo.get(principal.getName());
+        String resource = userRepo.get(principal.getName());
         userRepo.remove(principal);
         resourceRepo.remove(resource);
         return true;
@@ -77,27 +78,28 @@ public class StompUserRepository {
 
     /**
      * 释放resource并解除user与resource的绑定关系
+     *
      * @param resource
      * @return
      */
-    public boolean releaseResource(Principal principal,String resource){
-        if(StringUtils.isEmpty(resource)){
+    public boolean releaseResource(Principal principal, String resource) {
+        if (StringUtils.isEmpty(resource)) {
             log.info("[release-resource] 释放失败 资源isEmpty");
             return false;
         }
-        if(!userRepo.containsKey(principal.getName())){
-            log.info("[release-resource] 释放失败 资源中未找到[{}]",principal.getName());
+        if (!userRepo.containsKey(principal.getName())) {
+            log.info("[release-resource] 释放失败 资源中未找到[{}]", principal.getName());
             return false;
         }
-        String name=resourceRepo.get(resource);
-        if(!principal.getName().equalsIgnoreCase(name)){
+        String name = resourceRepo.get(resource);
+        if (!principal.getName().equalsIgnoreCase(name)) {
             log.info("[release-resource] 释放失败 当前绑定资源用户与释放资源用户不一致 resource->{} from user->{} to->{}"
-                    ,resource,name,principal.getName());
+                    , resource, name, principal.getName());
             return false;
         }
 
         resourceRepo.remove(resource);
-        userRepo.put(name,null);
+        userRepo.put(name, null);
         return true;
     }
 }

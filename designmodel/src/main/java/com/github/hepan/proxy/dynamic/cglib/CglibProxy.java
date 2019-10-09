@@ -10,6 +10,14 @@ public class CglibProxy<T> implements MethodInterceptor {
 
     private T target;
 
+    public static void main(String[] args) {
+        CglibProxy<GoodsService> proxy = new CglibProxy<>();
+        GoodsService goodsService = proxy.getinstence(new GoodsService());
+        goodsService.add();
+        goodsService.delete("1234");
+
+    }
+
     private T getinstence(T target) {
         this.target = target;
         Enhancer enhancer = new Enhancer();
@@ -20,21 +28,11 @@ public class CglibProxy<T> implements MethodInterceptor {
         return (T) enhancer.create();
     }
 
-
     @Override
     public T intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
         System.out.println("CglibProxy.intercept begin");
         T t = (T) proxy.invokeSuper(obj, args);
         System.out.println("CglibProxy.intercept end");
         return t;
-    }
-
-
-    public static void main(String[] args) {
-        CglibProxy<GoodsService> proxy=new CglibProxy<>();
-        GoodsService goodsService=proxy.getinstence(new GoodsService());
-        goodsService.add();
-        goodsService.delete("1234");
-
     }
 }

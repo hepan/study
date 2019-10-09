@@ -18,8 +18,8 @@ public class ZsZpp1Application {
 
 
     @GetMapping("/hello-app-1/{str}")
-    public String helloApp1(@PathVariable("str") String str){
-        String ret="hello-app-1 -> " + str;
+    public String helloApp1(@PathVariable("str") String str) {
+        String ret = "hello-app-1 -> " + str;
         System.out.println(ret);
         return ret;
 

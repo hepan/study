@@ -1,0 +1,4 @@
+thrift:
+  port: 8091
+  minWorkerThreads: 10
+  maxWorkerThreads: 20

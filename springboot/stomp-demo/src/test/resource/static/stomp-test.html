@@ -10,7 +10,6 @@
         var disConnect = null;
 
 
-
         function connect() {
             var client = Stomp.client('ws://192.168.1.49:18080/ws/websocket');
             client.heartbeat.outgoing = 5000;
@@ -25,7 +24,7 @@
 
                 // // 订阅消息
 
-                client.subscribe("/topic/bind/123456",onMessage);
+                client.subscribe("/topic/bind/123456", onMessage);
             }, function (error) {
                 console.log('client connect error:', error);
                 updateState('连接失败');
@@ -44,25 +43,25 @@
         }
 
         function onMessage(message) {
-            console.log("receive message ["+message.body+"]");
+            console.log("receive message [" + message.body + "]");
             //insertChat(false, message.headers.destination, message.body)
         }
 
         function updateState(state) {
-            console.log('[connected] state is -->'+state)
+            console.log('[connected] state is -->' + state)
         }
 
 
-        function send(destination,message) {
+        function send(destination, message) {
             // var destination=document.getElementById("destination").value;
             // var message=document.getElementById("message").value;
             // var destination='/topic/bind/123456';
-            if(sendMessage==null){
+            if (sendMessage == null) {
                 console.error("ws connect break!!!");
-                return ;
+                return;
             }
-            sendMessage(destination,{},message);
-            console.log("send message ---->" +destination +"*****"+ message)
+            sendMessage(destination, {}, message);
+            console.log("send message ---->" + destination + "*****" + message)
 
         }
     </script>
@@ -71,11 +70,12 @@
 <body>
 <h1>stomp-test</h1>
 
-<button type="button" id="connect" onclick="connect()"> connect </button>
+<button id="connect" onclick="connect()" type="button"> connect</button>
 <br>
 
-<button type="button" id="send topic message" onclick="send('/topic/bind/123456','this is topic message')">sendTopic()</button>
-<button type="button" id="send app message" onclick="send('/app/test/user123','this is app message')">sendApp()</button>
+<button id="send topic message" onclick="send('/topic/bind/123456','this is topic message')" type="button">sendTopic()
+</button>
+<button id="send app message" onclick="send('/app/test/user123','this is app message')" type="button">sendApp()</button>
 
 </body>
 

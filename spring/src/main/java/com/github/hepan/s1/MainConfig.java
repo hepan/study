@@ -7,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
 public class MainConfig {
 
     @Bean
-    public Person person(){
+    public Person person() {
         System.out.println("person 创建");
-        return new Person("zhangsan",11);
+        return new Person("zhangsan", 11);
     }
 }
