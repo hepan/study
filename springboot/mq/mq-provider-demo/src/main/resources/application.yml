@@ -1,0 +1,11 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mq-provider-demo
+  rabbitmq:
+    addresses: localhost
+    port: 5672
+    username: admin
+    password: admin
