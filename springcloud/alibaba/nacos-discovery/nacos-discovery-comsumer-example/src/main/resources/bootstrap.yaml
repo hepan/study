@@ -1,0 +1,10 @@
+server:
+  port: 18071
+
+spring:
+  application:
+    name: nacos-discovery-consumer-example
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.1.244:8848
